@@ -122,7 +122,10 @@ function Navbar({ active }) {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={scrolled ? { background: "rgba(8,11,20,0.88)", backdropFilter: "blur(24px)", borderBottom: `1px solid ${C.primary}20` } : {}}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <motion.div whileHover={{ scale: 1.05 }} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        <motion.div whileHover={{ scale: 1.05 }} onClick={() => {
+            const el = document.getElementById("main-scroll");
+            if(el) el.scrollTo({ top: 0, behavior: "smooth" });
+          }}
           className="flex items-center gap-3 cursor-pointer">
           <div className="w-9 h-9 rounded-full overflow-hidden border-2" style={{ borderColor: `${C.primary}60`, boxShadow: `0 0 12px ${C.primary}40` }}>
             <img src={PROFILE_PHOTO} alt="M" className="w-full h-full object-cover object-top" />
@@ -134,6 +137,7 @@ function Navbar({ active }) {
         <div className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map(link => (
             <a key={link} href={`#${link.toLowerCase()}`}
+              onClick={e=>{e.preventDefault();const t=document.getElementById(link.toLowerCase());const s=document.getElementById("main-scroll");if(t&&s)s.scrollTo({top:t.offsetTop,behavior:"smooth"});}}
               className="text-sm font-medium transition-all duration-200 hover:text-white relative group"
               style={{ color: active === link.toLowerCase() ? "#fff" : C.muted, fontFamily:"Poppins,sans-serif" }}>
               {link}
@@ -163,7 +167,7 @@ function Navbar({ active }) {
           <motion.div initial={{ opacity:0,height:0 }} animate={{ opacity:1,height:"auto" }} exit={{ opacity:0,height:0 }}
             className="md:hidden px-6 pb-5" style={{ background: "rgba(8,11,20,0.97)", borderBottom: `1px solid ${C.primary}15` }}>
             {NAV_LINKS.map(link => (
-              <a key={link} href={`#${link.toLowerCase()}`} onClick={() => setOpen(false)}
+              <a key={link} href={`#${link.toLowerCase()}`} onClick={e=>{e.preventDefault();setOpen(false);const t=document.getElementById(link.toLowerCase());const s=document.getElementById("main-scroll");if(t&&s)s.scrollTo({top:t.offsetTop,behavior:"smooth"});}}
                 className="block py-3.5 text-sm font-medium border-b" style={{ color: C.muted, borderColor: "rgba(255,255,255,0.05)", fontFamily:"Poppins,sans-serif" }}>
                 {link}
               </a>
@@ -178,7 +182,7 @@ function Navbar({ active }) {
 /* ─── HERO ─── */
 function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:"72px",boxSizing:"border-box"}}>
       {/* BG layers */}
       <div className="absolute inset-0" style={{ background: C.bg }}>
         <div className="absolute inset-0" style={{ backgroundImage: `linear-gradient(${C.primary}06 1px,transparent 1px),linear-gradient(90deg,${C.primary}06 1px,transparent 1px)`, backgroundSize: "60px 60px" }} />
@@ -268,7 +272,7 @@ function Hero() {
 
         {/* Scroll */}
         <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.8}}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
           <span className="text-xs tracking-widest uppercase" style={{ color:C.muted,fontFamily:"Poppins,sans-serif" }}>Scroll</span>
           <motion.div animate={{y:[0,8,0]}} transition={{repeat:Infinity,duration:1.8}}
             className="w-px h-10" style={{ background:`linear-gradient(to bottom,${C.primary},transparent)` }} />
@@ -283,7 +287,7 @@ function About() {
   const [ref,inView]=useReveal();
   const stack=["C++","Python","JavaScript","PHP","HTML/CSS","Linux","Prompt Eng.","AI/ML"];
   return (
-    <section id="about" className="py-32 relative overflow-hidden">
+    <section id="about" className="py-20 relative overflow-hidden">
       <div className="absolute right-0 top-1/2 w-96 h-96 rounded-full blur-3xl pointer-events-none -translate-y-1/2" style={{background:`${C.green}06`}} />
       <div className="max-w-6xl mx-auto px-6">
         <div ref={ref} className="grid lg:grid-cols-2 gap-16 items-center">
@@ -341,7 +345,7 @@ function About() {
                   Aspiring Software Developer
                 </p>
                 <div className="w-full space-y-2.5 text-sm text-left">
-                  {[["📍","Location","Sirsi, Karnataka, India"],["🎓","Education","BCA — JMJ Degree College (2022–26)"],["🌐","Languages","English · Kannada · Hindi"],["✉️","Email","misbaamf005@gmail.com"],["📱","Phone","9591895425"]].map(([ic,label,val])=>(
+                  {[["📍","Location","Sirsi, Karnataka, India"],["🎓","Education","BCA — JMJ Degree College (2022–26)"],["🌐","Languages","English · Kannada · Hindi"],["✉️","Email","misbaamf005@gmail.com"],["📱","Phone","0591815425"]].map(([ic,label,val])=>(
                     <div key={label} className="flex items-center gap-3 p-3 rounded-xl" style={{background:"rgba(255,255,255,0.025)",border:"1px solid rgba(255,255,255,0.05)"}}>
                       <span>{ic}</span>
                       <div>
@@ -364,7 +368,7 @@ function About() {
 function Skills() {
   const [ref,inView]=useReveal();
   return (
-    <section id="skills" className="py-32 relative" style={{background:C.bgAlt}}>
+    <section id="skills" className="py-20 relative" style={{background:C.bgAlt}}>
       <div className="absolute inset-0 pointer-events-none" style={{background:`radial-gradient(ellipse 70% 50% at 50% 50%,${C.primary}05,transparent)`}} />
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
@@ -410,7 +414,7 @@ function Projects() {
   const [ref,inView]=useReveal();
   const [hovered,setHovered]=useState(null);
   return (
-    <section id="projects" className="py-32" style={{background:C.bg}}>
+    <section id="projects" className="py-20" style={{background:C.bg}}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
           <Label>Portfolio</Label>
@@ -469,7 +473,7 @@ function Experience() {
   const [ref,inView]=useReveal();
   const items=["Designed and refined AI prompts to generate accurate, relevant, high-quality responses across diverse use cases","Analyzed and improved prompt structures to enhance model outputs and reduce inconsistencies","Experimented with role prompting, context setting, and step-by-step instruction techniques","Evaluated AI responses and iterated on prompt design to achieve measurably better results","Collaborated on documentation of prompt experiments and maintained detailed records","Built knowledge base of prompt patterns and best practices for team-wide reuse"];
   return (
-    <section id="experience" className="py-32 relative" style={{background:C.bgAlt}}>
+    <section id="experience" className="py-20 relative" style={{background:C.bgAlt}}>
       <div className="absolute inset-0 pointer-events-none" style={{background:`radial-gradient(ellipse 60% 40% at 50% 50%,${C.violet}05,transparent)`}} />
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
@@ -528,7 +532,7 @@ function Experience() {
 function Services() {
   const [ref,inView]=useReveal();
   return (
-    <section id="services" className="py-32" style={{background:C.bg}}>
+    <section id="services" className="py-20" style={{background:C.bg}}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
           <Label>What I Offer</Label>
@@ -559,7 +563,7 @@ function Services() {
 function Testimonials() {
   const [ref,inView]=useReveal();
   return (
-    <section id="testimonials" className="py-32" style={{background:C.bgAlt}}>
+    <section id="testimonials" className="py-20" style={{background:C.bgAlt}}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
           <Label>Kind Words</Label>
@@ -605,7 +609,7 @@ function Contact() {
     setTimeout(()=>{setStatus("sent");setForm({name:"",email:"",message:""});setTimeout(()=>setStatus(null),3500)},1200);
   };
   return (
-    <section id="contact" className="py-32 relative" style={{background:C.bg}}>
+    <section id="contact" className="py-20 relative" style={{background:C.bg}}>
       <div className="absolute inset-0 pointer-events-none" style={{background:`radial-gradient(ellipse 60% 50% at 50% 100%,${C.primary}06,transparent)`}} />
       <div className="max-w-6xl mx-auto px-6">
         <motion.div ref={ref} initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:0.7}} className="text-center mb-16">
@@ -617,7 +621,7 @@ function Contact() {
           <motion.div initial={{opacity:0,x:-40}} animate={inView?{opacity:1,x:0}:{}} transition={{duration:0.8,delay:0.2}}>
             <h3 className="text-lg font-bold mb-6" style={{color:C.text,fontFamily:"Poppins,sans-serif"}}>Contact Info</h3>
             <div className="space-y-3 mb-8">
-              {[["✉️","Email","misbaamf005@gmail.com"],["📱","Phone","9591895425"],["📍","Location","Sirsi, Karnataka, India"],["⏰","Availability","Mon – Sat, 9AM – 6PM IST"]].map(([ic,label,val])=>(
+              {[["✉️","Email","misbaamf005@gmail.com"],["📱","Phone","0591815425"],["📍","Location","Sirsi, Karnataka, India"],["⏰","Availability","Mon – Sat, 9AM – 6PM IST"]].map(([ic,label,val])=>(
                 <motion.div key={label} whileHover={{x:4}} className="flex items-center gap-4 p-4 rounded-2xl"
                   style={{background:"rgba(255,255,255,0.025)",border:"1px solid rgba(255,255,255,0.06)"}}>
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style={{background:`${C.primary}15`,border:`1px solid ${C.primary}20`}}>{ic}</div>
@@ -686,7 +690,7 @@ function Contact() {
 /* ─── FOOTER ─── */
 function Footer() {
   return (
-    <footer className="py-10 relative" style={{borderTop:`1px solid ${C.primary}15`}}>
+    <footer className="py-7 relative" style={{borderTop:`1px solid ${C.primary}15`}}>
       <div className="absolute inset-0 pointer-events-none" style={{background:`linear-gradient(to top,${C.primary}04,transparent)`}} />
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -712,23 +716,24 @@ export default function Portfolio() {
   const [activeSection,setActiveSection]=useState("hero");
   useEffect(()=>{
     if(!loading){
-      const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActiveSection(e.target.id);}),{threshold:0.35});
+      const root = document.getElementById("main-scroll");
+      const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActiveSection(e.target.id);}),{root,threshold:0.35});
       document.querySelectorAll("section[id]").forEach(s=>obs.observe(s));
       return ()=>obs.disconnect();
     }
   },[loading]);
   return (
-    <div style={{background:C.bg,color:C.text,fontFamily:"Poppins,sans-serif"}} className="min-h-screen overflow-x-hidden">
+    <div style={{background:C.bg,color:C.text,fontFamily:"Poppins,sans-serif"}} className="h-screen overflow-hidden">
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-      <style>{`html{scroll-behavior:smooth}input::placeholder,textarea::placeholder{color:#374151}`}</style>
+      <style>{`html,body{height:100%;margin:0}input::placeholder,textarea::placeholder{color:#374151}#main-scroll{scroll-behavior:smooth}`}</style>
       <AnimatePresence>{loading&&<Loader onDone={()=>setLoading(false)}/>}</AnimatePresence>
       {!loading&&(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.4}}>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.4}} className="h-full flex flex-col overflow-hidden">
           <Navbar active={activeSection}/>
-          <main>
+          <main id="main-scroll" className="flex-1 overflow-y-auto overflow-x-hidden">
             <Hero/><About/><Skills/><Projects/><Experience/><Services/><Testimonials/><Contact/>
+            <Footer/>
           </main>
-          <Footer/>
         </motion.div>
       )}
     </div>
