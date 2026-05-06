@@ -34,10 +34,10 @@ const SKILLS = [
 ];
 
 const PROJECTS = [
-  { title: "Restaurant Website", desc: "A visually rich restaurant platform featuring interactive menus, reservation flows, and warm editorial design crafted to captivate diners.", tech: ["HTML","CSS","JavaScript"], color: "#F97316", colorB: "#EF4444", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", tag: "Hospitality" },
-  { title: "Freelancer Platform", desc: "A sleek marketplace connecting talent with opportunity — service listings, portfolio showcases, and frictionless client onboarding.", tech: ["HTML","CSS","JavaScript","PHP"], color: C.primary, colorB: C.violet, img: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80", tag: "SaaS" },
-  { title: "Real Estate Website", desc: "Premium property listing portal with advanced search, immersive gallery views, and inquiry forms that convert browsers into buyers.", tech: ["HTML","CSS","JavaScript"], color: C.cyan, colorB: "#3B82F6", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80", tag: "PropTech" },
-  { title: "Video Streaming Site", desc: "Netflix-inspired streaming UI with category browsing, responsive content cards, and fluid playback built with AI-assisted design.", tech: ["HTML","CSS","JavaScript"], color: C.green, colorB: "#10B981", img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80", tag: "Entertainment" },
+  { title: "Restaurant Website", desc: "A visually rich restaurant platform featuring interactive menus, reservation flows, and warm editorial design crafted to captivate diners.", tech: ["HTML","CSS","JavaScript"], color: "#F97316", colorB: "#EF4444", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", tag: "Hospitality", liveUrl: "https://amfrestaurant-m27r.vercel.app/", githubUrl: "https://github.com/misbaamf/amfrestaurant" },
+  { title: "Freelancer Platform", desc: "A sleek marketplace connecting talent with opportunity — service listings, portfolio showcases, and frictionless client onboarding.", tech: ["HTML","CSS","JavaScript","PHP"], color: C.primary, colorB: C.violet, img: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80", tag: "SaaS", liveUrl: "http://my-portfolio-4yug.vercel.app", githubUrl: "https://github.com/misbaamf/my-portfolio" },
+  { title: "Real Estate Website", desc: "Premium property listing portal with advanced search, immersive gallery views, and inquiry forms that convert browsers into buyers.", tech: ["HTML","CSS","JavaScript"], color: C.cyan, colorB: "#3B82F6", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80", tag: "PropTech", liveUrl: null, githubUrl: null },
+  { title: "Video Streaming Site", desc: "Netflix-inspired streaming UI with category browsing, responsive content cards, and fluid playback built with AI-assisted design.", tech: ["HTML","CSS","JavaScript"], color: C.green, colorB: "#10B981", img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80", tag: "Entertainment", liveUrl: "https://vedio-streaming-project-f49q-murex.vercel.app/", githubUrl: "https://github.com/misbaamf/vedio_streaming_project" },
 ];
 
 const SERVICES = [
@@ -448,16 +448,33 @@ function Projects() {
                   ))}
                 </div>
                 <div className="flex gap-3">
-                  <motion.button whileHover={{scale:1.04,boxShadow:`0 0 24px ${p.color}50`}} whileTap={{scale:0.97}}
-                    className="flex-1 py-2.5 rounded-xl text-sm font-bold text-white"
-                    style={{background:`linear-gradient(135deg,${p.color},${p.colorB})`,fontFamily:"Poppins,sans-serif"}}>
-                    Live Demo ↗
-                  </motion.button>
-                  <motion.button whileHover={{scale:1.04}} whileTap={{scale:0.97}}
-                    className="flex-1 py-2.5 rounded-xl text-sm font-bold"
-                    style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,fontFamily:"Poppins,sans-serif"}}>
-                    GitHub
-                  </motion.button>
+                  {p.liveUrl ? (
+                    <motion.a href={p.liveUrl} target="_blank" rel="noopener noreferrer"
+                      whileHover={{scale:1.04,boxShadow:`0 0 24px ${p.color}50`}} whileTap={{scale:0.97}}
+                      className="flex-1 py-2.5 rounded-xl text-sm font-bold text-white text-center"
+                      style={{background:`linear-gradient(135deg,${p.color},${p.colorB})`,fontFamily:"Poppins,sans-serif",textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                      Live Demo ↗
+                    </motion.a>
+                  ) : (
+                    <motion.span className="flex-1 py-2.5 rounded-xl text-sm font-bold text-white text-center"
+                      style={{background:`linear-gradient(135deg,${p.color}55,${p.colorB}55)`,fontFamily:"Poppins,sans-serif",display:"flex",alignItems:"center",justifyContent:"center",opacity:0.45,cursor:"default"}}>
+                      Coming Soon
+                    </motion.span>
+                  )}
+                  {p.githubUrl ? (
+                    <motion.a href={p.githubUrl} target="_blank" rel="noopener noreferrer"
+                      whileHover={{scale:1.04,borderColor:"rgba(255,255,255,0.25)"}} whileTap={{scale:0.97}}
+                      className="flex-1 py-2.5 rounded-xl text-sm font-bold text-center"
+                      style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,fontFamily:"Poppins,sans-serif",textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                      GitHub
+                    </motion.a>
+                  ) : (
+                    <motion.span className="flex-1 py-2.5 rounded-xl text-sm font-bold text-center"
+                      style={{background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.05)",color:"rgba(100,116,139,0.4)",fontFamily:"Poppins,sans-serif",display:"flex",alignItems:"center",justifyContent:"center",cursor:"default"}}>
+                      Private
+                    </motion.span>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -633,12 +650,13 @@ function Contact() {
               ))}
             </div>
             <div className="flex gap-3">
-              {[["GitHub","#1f2937"],["LinkedIn",C.primary]].map(([name,bg])=>(
-                <motion.button key={name} whileHover={{scale:1.05,boxShadow:`0 0 24px ${bg}50`}} whileTap={{scale:0.97}}
-                  className="flex-1 py-3.5 rounded-2xl text-sm font-bold text-white"
-                  style={{background:`linear-gradient(135deg,${bg},${bg}cc)`,border:`1px solid ${bg}50`,fontFamily:"Poppins,sans-serif"}}>
+              {[["GitHub","#1f2937","https://github.com/misbaamf"],["LinkedIn",C.primary,"https://www.linkedin.com/in/misba-amf-49975b367/"]].map(([name,bg,url])=>(
+                <motion.a key={name} href={url} target="_blank" rel="noopener noreferrer"
+                  whileHover={{scale:1.05,boxShadow:`0 0 24px ${bg}50`}} whileTap={{scale:0.97}}
+                  className="flex-1 py-3.5 rounded-2xl text-sm font-bold text-white text-center"
+                  style={{background:`linear-gradient(135deg,${bg},${bg}cc)`,border:`1px solid ${bg}50`,fontFamily:"Poppins,sans-serif",textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}}>
                   {name} ↗
-                </motion.button>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -700,10 +718,28 @@ function Footer() {
           <span className="font-black text-lg" style={{fontFamily:"Poppins,sans-serif",background:`linear-gradient(90deg,${C.primary},${C.violet})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>M·AMF</span>
         </div>
         <p className="text-xs" style={{color:C.muted,fontFamily:"Poppins,sans-serif"}}>© 2025 Misba AMF · All rights reserved · Made with ♥ in Sirsi</p>
-        <div className="flex gap-5">
+        <div className="flex items-center gap-5">
           {NAV_LINKS.map(l=>(
             <a key={l} href={`#${l.toLowerCase()}`} className="text-xs transition-colors hover:text-white" style={{color:C.muted,fontFamily:"Poppins,sans-serif"}}>{l}</a>
           ))}
+          <div className="flex gap-3 ml-2">
+            <motion.a href="https://github.com/misbaamf" target="_blank" rel="noopener noreferrer"
+              whileHover={{scale:1.15,color:"#fff"}} whileTap={{scale:0.92}}
+              aria-label="GitHub profile"
+              style={{color:C.muted,display:"flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:"50%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",textDecoration:"none",transition:"border-color 0.2s"}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,0.25)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,0.08)"}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </motion.a>
+            <motion.a href="https://www.linkedin.com/in/misba-amf-49975b367/" target="_blank" rel="noopener noreferrer"
+              whileHover={{scale:1.15}} whileTap={{scale:0.92}}
+              aria-label="LinkedIn profile"
+              style={{color:C.muted,display:"flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:"50%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",textDecoration:"none",transition:"border-color 0.2s"}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=`${C.primary}60`;e.currentTarget.style.color=C.primary}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,0.08)";e.currentTarget.style.color=C.muted}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </motion.a>
+          </div>
         </div>
       </div>
     </footer>
